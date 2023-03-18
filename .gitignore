@@ -79,3 +79,5 @@ Assets/Resources.meta
 Assets/Resources/*
 Assets/Plugins/*
 Assets/Plugins.meta
+Assets/Prefab/*
+Assets/Prefab.meta
