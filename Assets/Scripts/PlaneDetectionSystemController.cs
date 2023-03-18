@@ -49,10 +49,6 @@ public class PlaneDetectionSystemController : MonoBehaviour
                 {
                     CreateObject(raycastHit.point);
                 }
-                else
-                {
-                    SetObject(raycastHit.point);
-                }
             }
         }
 #else
@@ -66,10 +62,6 @@ public class PlaneDetectionSystemController : MonoBehaviour
                 if (_instantiatedObject == null)
                 {
                     CreateObject(hits[0].pose.position);
-                }
-                else
-                {
-                    SetObject(hits[0].pose.position);
                 }
             }
         }
@@ -85,10 +77,5 @@ public class PlaneDetectionSystemController : MonoBehaviour
     {
         _instantiatedObject = Instantiate(_placementPrefab, position, Quaternion.identity) as GameObject;
         OnCreatedObjectCallBack?.Invoke();
-    }
-
-    private void SetObject(Vector3 position)
-    {
-        _instantiatedObject.transform.position = position;
     }
 }
