@@ -7,26 +7,25 @@ using UnityEngine.XR.ARSubsystems;
 public class PlaneDetectionSystemController : MonoBehaviour
 {
     public event Action OnCreatedObjectCallBack;
-    
+
     [SerializeField] private ARPlaneManager _planeManager;
     [SerializeField] private ARRaycastManager _raycastManager;
-  
-    [SerializeField] private GameObject _placementPrefab;
 
     private Vector3 _touchPosition;
-    private GameObject _instantiatedObject;
-    
+
+    public event Action<Vector3> OnRaycastCallBack;
+
     public void Initialize()
     {
-        if (_planeManager == null || _raycastManager == null || _placementPrefab==null)
+        if (_planeManager == null || _raycastManager == null)
         {
             Application.Quit();
         }
     }
 
-    public void PlaneDetectionSetObject()
+    public void PlaneDetectionSetObject(GameObject instantiatedObject)
     {
-        if (_instantiatedObject != null)
+        if (instantiatedObject != null)
         {
             foreach (var plane in _planeManager.trackables)
             {
@@ -35,7 +34,7 @@ public class PlaneDetectionSystemController : MonoBehaviour
 
             return;
         }
-        
+
 #if UNITY_EDITOR
 
         if (Input.GetMouseButtonUp(0))
@@ -43,12 +42,10 @@ public class PlaneDetectionSystemController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit raycastHit;
 
-            if (Physics.Raycast(ray, out raycastHit, 30.0f))
+            if (Physics.Raycast(ray, out raycastHit, 30.0f) && instantiatedObject == null)
             {
-                if (_instantiatedObject == null)
-                {
-                    CreateObject(raycastHit.point);
-                }
+                OnRaycastCallBack(raycastHit.point);
+                OnCreatedObjectCallBack?.Invoke();
             }
         }
 #else
@@ -57,25 +54,12 @@ public class PlaneDetectionSystemController : MonoBehaviour
             _touchPosition = Input.GetTouch(0).position;
             var hits = new List<ARRaycastHit>();
 
-            if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes))
+            if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes)&&instantiatedObject == null)
             {
-                if (_instantiatedObject == null)
-                {
-                    CreateObject(hits[0].pose.position);
-                }
+                OnRaycastCallBack(hits[0].pose.position);
+                OnCreatedObjectCallBack?.Invoke();
             }
         }
 #endif
-    }
-
-    public void SetInstanceNull()
-    {
-        Destroy(_instantiatedObject);
-    }
-
-    private void CreateObject(Vector3 position)
-    {
-        _instantiatedObject = Instantiate(_placementPrefab, position, Quaternion.identity) as GameObject;
-        OnCreatedObjectCallBack?.Invoke();
     }
 }

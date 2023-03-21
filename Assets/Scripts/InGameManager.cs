@@ -1,10 +1,16 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InGameManager : MonoBehaviour
 {
-    [SerializeField] private PlaneDetectionSystemController _planeDetection;
+    [SerializeField] private PlaneDetectionSystemController _planeDetectionController;
+    [SerializeField] private LightEstimationController _lightEstimationController;
     [SerializeField] private MainUI _mainUI;
-
+    
+    [SerializeField] private GameObject _placementPrefab;
+    private GameObject _instantiatedObject;
+    
     private void Start()
     {
         Initialize();
@@ -13,18 +19,37 @@ public class InGameManager : MonoBehaviour
 
     private void Update()
     {
-        _planeDetection.PlaneDetectionSetObject();
+        _planeDetectionController.PlaneDetectionSetObject(_instantiatedObject);
     }
 
     private void Initialize()
     {
-        _planeDetection.Initialize();
         _mainUI.Initialized();
+        _planeDetectionController.Initialize();
+        _lightEstimationController.Initialize();
     }
 
     private void SetEvent()
     {
-        _mainUI.OnClickCallback += _planeDetection.SetInstanceNull;
-        _planeDetection.OnCreatedObjectCallBack+=()=>_mainUI.SetIsCreated(true);
+        _mainUI.OnClickCallback += PlacedObjectDestroy;
+        _planeDetectionController.OnRaycastCallBack += CreateObject;
+        _planeDetectionController.OnCreatedObjectCallBack+=()=>_mainUI.SetIsCreated(true);
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    private void PlacedObjectDestroy()
+    {
+        Destroy(_instantiatedObject);
+    }
+
+    /// <summary>
+    /// /
+    /// </summary>
+    /// <param name="position"></param>
+    private void CreateObject(Vector3 position)
+    {
+        _instantiatedObject = Instantiate(_placementPrefab, position, Quaternion.identity) as GameObject;
     }
 }
