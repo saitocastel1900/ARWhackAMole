@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using ARSystemController;
+using Manager.ARSystemManager;
 using UI;
 
 namespace Manager
@@ -15,12 +15,12 @@ namespace Manager
         /// <summary>
         /// 平面検出を行う
         /// </summary>
-        [SerializeField] private PlaneDetectionSystemController _planeDetectionController;
+        [SerializeField] private PlaneDetectionSystemManager _planeDetectionController;
         
         /// <summary>
         /// 光源推定を行う
         /// </summary>
-        [SerializeField] private LightEstimationSystemController _lightEstimationController;
+        [SerializeField] private LightEstimationSystemManager _lightEstimationController;
  
         /// <summary>
         /// 全体のUIを管理する
@@ -54,6 +54,7 @@ namespace Manager
         private void Initialize()
         {
             _mainUI.Initialized();
+
             _planeDetectionController.Initialize();
             _lightEstimationController.Initialize();
         }

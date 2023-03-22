@@ -2,11 +2,17 @@ using UI.DebugMessage;
 using UI.ResetButton;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace UI
 {
     public class MainUI : MonoBehaviour
     {
+        /// <summary>
+        /// ボタンをクリックした時に呼ばれる
+        /// </summary>
+        public event UnityAction OnClickCallBack;
+        
         /// <summary>
         /// Button
         /// </summary>
@@ -15,19 +21,15 @@ namespace UI
         /// <summary>
         /// Text
         /// </summary>
-        [SerializeField] private DebugMessagePresenter _messageText;
-
-        /// <summary>
-        /// ボタンをクリックした時に呼ばれる
-        /// </summary>
-        public event UnityAction OnClickCallBack;
-
+        [Inject] private DebugMessagePresenter _messageText;
+        
         /// <summary>
         /// 初期化
         /// </summary>
         public void Initialized()
         {
             _resetButton.Initialize();
+            _messageText.Initialize();
             SetEvent();
         }
 
@@ -40,12 +42,21 @@ namespace UI
         }
 
         /// <summary>
-        /// 
+        /// オブジェクトを生成したかのフラグの値を設定する
         /// </summary>
-        /// <param name="IsCreated"></param>
+        /// <param name="IsCreated">設定したい真偽値</param>
         public void SetIsCreated(bool IsCreated)
         {
             _resetButton.SetIsCreated(IsCreated);
+        }
+        
+        /// <summary>
+        /// 文字を表示する
+        /// </summary>
+        /// <param name="message">表示したい文字</param>
+        public void SetMessageText(string message)
+        {
+            _messageText.SetMessageText(message);
         }
     }
 }

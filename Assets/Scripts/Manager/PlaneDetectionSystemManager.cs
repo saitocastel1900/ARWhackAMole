@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-namespace ARSystemController
+namespace Manager.ARSystemManager
 {
-    public class PlaneDetectionSystemController : MonoBehaviour
+    public class PlaneDetectionSystemManager : MonoBehaviour
     {
         /// <summary>
         /// 平面をレイキャストした時に呼ばれる

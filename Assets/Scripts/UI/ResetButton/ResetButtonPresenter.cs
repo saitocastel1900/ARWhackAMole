@@ -27,7 +27,6 @@ namespace UI.ResetButton
         public void Initialize()
         {
             _model = new ResetButtonModel();
-
             Bind();
         }
 
