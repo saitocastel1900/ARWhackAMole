@@ -404,7 +404,6 @@ GameObject:
   - component: {fileID: 569795846}
   - component: {fileID: 569795848}
   - component: {fileID: 569795847}
-  - component: {fileID: 569795851}
   - component: {fileID: 569795850}
   - component: {fileID: 569795852}
   m_Layer: 0
@@ -485,18 +484,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _planeManager: {fileID: 569795847}
   _raycastManager: {fileID: 569795848}
---- !u!114 &569795851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 569795844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b80c4a0318079e4fa841faed643a4ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &569795852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,7 +1142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resetButton: {fileID: 612606933}
-  _messageText: {fileID: 0}
+  _messageText: {fileID: 83509664}
 --- !u!1 &1946750129
 GameObject:
   m_ObjectHideFlags: 0

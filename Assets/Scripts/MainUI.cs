@@ -1,39 +1,51 @@
+using UI.DebugMessage;
+using UI.ResetButton;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MainUI : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private ResetButtonPresenter _resetButton;
-    [SerializeField] private DebugMessagePresenter _messageText; 
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public event UnityAction OnClickCallback;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Initialized()
+    public class MainUI : MonoBehaviour
     {
-        _resetButton.Initialize();
-        SetEvent();
-    }
+        /// <summary>
+        /// Button
+        /// </summary>
+        [SerializeField] private ResetButtonPresenter _resetButton;
+        
+        /// <summary>
+        /// Text
+        /// </summary>
+        [SerializeField] private DebugMessagePresenter _messageText;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void SetEvent()
-    {
-        _resetButton.OnClickCallBack += ()=> OnClickCallback?.Invoke();
-    }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="IsCreated"></param>
-    public void SetIsCreated(bool IsCreated)
-    {
-        _resetButton.SetIsCreated(IsCreated);   
+        /// <summary>
+        /// ボタンをクリックした時に呼ばれる
+        /// </summary>
+        public event UnityAction OnClickCallBack;
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public void Initialized()
+        {
+            _resetButton.Initialize();
+            SetEvent();
+        }
+
+        /// <summary>
+        /// イベントを設定
+        /// </summary>
+        private void SetEvent()
+        {
+            _resetButton.OnClickCallBack += () => OnClickCallBack?.Invoke();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IsCreated"></param>
+        public void SetIsCreated(bool IsCreated)
+        {
+            _resetButton.SetIsCreated(IsCreated);
+        }
     }
 }

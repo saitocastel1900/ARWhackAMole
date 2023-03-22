@@ -1,13 +1,22 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ResetButtonView : MonoBehaviour
+namespace UI.ResetButton
 {
-    [SerializeField] private Button _button;
-
-    public void SetShowView(bool isView)
+    public class ResetButtonView : MonoBehaviour
     {
-        _button.interactable=isView;
+        /// <summary>
+        /// Button
+        /// </summary>
+        [SerializeField] private Button _button;
+
+        /// <summary>
+        /// オブジェクト表示する
+        /// </summary>
+        /// <param name="isView">表示するかの真偽値</param>
+        public void SetShowView(bool isView)
+        {
+            _button.interactable = isView;
+        }
     }
 }

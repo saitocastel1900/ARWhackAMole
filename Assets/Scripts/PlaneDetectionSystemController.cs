@@ -4,62 +4,81 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-public class PlaneDetectionSystemController : MonoBehaviour
+namespace ARSystemController
 {
-    public event Action OnCreatedObjectCallBack;
-
-    [SerializeField] private ARPlaneManager _planeManager;
-    [SerializeField] private ARRaycastManager _raycastManager;
-
-    private Vector3 _touchPosition;
-
-    public event Action<Vector3> OnRaycastCallBack;
-
-    public void Initialize()
+    public class PlaneDetectionSystemController : MonoBehaviour
     {
-        if (_planeManager == null || _raycastManager == null)
-        {
-            Application.Quit();
-        }
-    }
+        /// <summary>
+        /// 平面をレイキャストした時に呼ばれる
+        /// </summary>
+        public event Action<Vector3> OnRaycastCallBack;
 
-    public void PlaneDetectionSetObject(GameObject instantiatedObject)
-    {
-        if (instantiatedObject != null)
+        /// <summary>
+        /// ARPlaneManager
+        /// </summary>
+        [SerializeField] private ARPlaneManager _planeManager;
+
+        /// <summary>
+        /// ARRaycastManager
+        /// </summary>
+        [SerializeField] private ARRaycastManager _raycastManager;
+
+        /// <summary>
+        /// スマートフォンをタッチした場所
+        /// </summary>
+        private Vector3 _touchPosition;
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public void Initialize()
         {
-            foreach (var plane in _planeManager.trackables)
+            if (_planeManager == null || _raycastManager == null)
             {
-                plane.gameObject.SetActive(false);
+                Application.Quit();
             }
-
-            return;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="instantiatedObject"></param>
+        public void PlaneDetectionSetObject(GameObject instantiatedObject)
+        {
+            if (instantiatedObject != null)
+            {
+                foreach (var plane in _planeManager.trackables)
+                {
+                    plane.gameObject.SetActive(false);
+                }
+
+                return;
+            }
 
 #if UNITY_EDITOR
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit raycastHit;
-
-            if (Physics.Raycast(ray, out raycastHit, 30.0f) && instantiatedObject == null)
+            if (Input.GetMouseButtonUp(0))
             {
-                OnRaycastCallBack(raycastHit.point);
-                OnCreatedObjectCallBack?.Invoke();
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit raycastHit;
+                
+                if (Physics.Raycast(ray, out raycastHit, 30.0f) && instantiatedObject == null)
+                {
+                    OnRaycastCallBack(raycastHit.point);
+                }
             }
-        }
 #else
-        if (Input.touchCount > 0)
-        {
-            _touchPosition = Input.GetTouch(0).position;
-            var hits = new List<ARRaycastHit>();
-
-            if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes)&&instantiatedObject == null)
+            if (Input.touchCount > 0)
             {
-                OnRaycastCallBack(hits[0].pose.position);
-                OnCreatedObjectCallBack?.Invoke();
+                _touchPosition = Input.GetTouch(0).position;
+                var hits = new List<ARRaycastHit>();
+
+                if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes) && instantiatedObject == null)
+                {
+                    OnRaycastCallBack(hits[0].pose.position);
+                }
             }
-        }
 #endif
+        }
     }
 }
