@@ -1,3 +1,5 @@
+using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,14 @@ namespace UI.ResetButton
         /// Button
         /// </summary>
         [SerializeField] private Button _button;
+
+        /// <summary>
+        /// ButtonのIObservableを返す
+        /// </summary>
+        public IObservable<Unit> OnClickButton()
+        {
+            return _button.OnClickAsObservable();
+        }
 
         /// <summary>
         /// オブジェクト表示する

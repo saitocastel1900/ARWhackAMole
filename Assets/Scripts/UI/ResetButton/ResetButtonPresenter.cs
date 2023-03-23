@@ -1,10 +1,10 @@
+using System;
 using UniRx;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace UI.ResetButton
 {
-    public class ResetButtonPresenter : MonoBehaviour
+    public class ResetButtonPresenter : IDisposable
     {
         /// <summary>
         /// ボタンをクリックしたときに呼ばれる
@@ -14,7 +14,7 @@ namespace UI.ResetButton
         /// <summary>
         /// View
         /// </summary>
-        [SerializeField] private ResetButtonView _view;
+        private ResetButtonView _view;
         
         /// <summary>
         /// Model
@@ -22,12 +22,27 @@ namespace UI.ResetButton
         private ResetButtonModel _model;
 
         /// <summary>
+        /// Disposable
+        /// </summary>
+        private  CompositeDisposable _compositeDisposable;
+        
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public ResetButtonPresenter(ResetButtonModel model,ResetButtonView view)
+        {
+            _model = model;
+            _view = view;
+        }
+        
+        /// <summary>
         /// 初期化
         /// </summary>
         public void Initialize()
         {
-            _model = new ResetButtonModel();
+            _compositeDisposable = new CompositeDisposable();
             Bind();
+            SetEvent();
         }
 
         /// <summary>
@@ -38,13 +53,23 @@ namespace UI.ResetButton
             _model.IsCreatedProp
                 .DistinctUntilChanged()
                 .Subscribe(_view.SetShowView)
-                .AddTo(this);
+                .AddTo(_compositeDisposable);
         }
 
         /// <summary>
+        /// イベントを設定
+        /// </summary>
+        private void SetEvent()
+        {
+            _view.OnClickButton()
+                .Subscribe(_=>OnButtonClick())
+                .AddTo(_compositeDisposable);
+        }
+        
+        /// <summary>
         /// ボタンをクリックした時のイベント
         /// </summary>
-        public void OnButtonClick()
+        private void OnButtonClick()
         {
             OnClickCallBack?.Invoke();
             _model.SetIsCreated(false);
@@ -57,6 +82,14 @@ namespace UI.ResetButton
         public void SetIsCreated(bool IsCreated)
         {
             _model.SetIsCreated(IsCreated);
+        }
+        
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            _compositeDisposable.Dispose();
         }
     }
 }

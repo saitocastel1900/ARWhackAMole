@@ -16,7 +16,7 @@ namespace UI
         /// <summary>
         /// Button
         /// </summary>
-        [SerializeField] private ResetButtonPresenter _resetButton;
+        [Inject] private ResetButtonPresenter _resetButton;
         
         /// <summary>
         /// Text
