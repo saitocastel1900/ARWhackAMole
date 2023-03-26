@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BlackbeardCrisis
 {
-    public class BlackbeardCrisisManager : MonoBehaviour
+    public class BlackbeardCore : MonoBehaviour
     {
         
     }

@@ -1,18 +1,14 @@
 using UI.DebugMessage;
 using UI.ResetButton;
+using UI.RotationSlider;
+using UI.ScaleSlider;
 using UnityEngine;
-using UnityEngine.Events;
 using Zenject;
 
 namespace UI
 {
     public class MainUI : MonoBehaviour
     {
-        /// <summary>
-        /// ボタンをクリックした時に呼ばれる
-        /// </summary>
-        public event UnityAction OnClickCallBack;
-        
         /// <summary>
         /// Button
         /// </summary>
@@ -22,14 +18,31 @@ namespace UI
         /// Text
         /// </summary>
         [Inject] private DebugMessagePresenter _messageText;
+
+        /// <summary>
+        /// Slider
+        /// </summary>
+        [Inject] private ScaleSliderPresenter _scaleSlider;
         
+        /// <summary>
+        /// Slider
+        /// </summary>
+        [Inject] private RotationSliderPresenter _rotationSlider;
+
+        private void Start()
+        {
+            Initialized();
+        }
+
         /// <summary>
         /// 初期化
         /// </summary>
-        public void Initialized()
+        private void Initialized()
         {
             _resetButton.Initialize();
             _messageText.Initialize();
+            _scaleSlider.Initialize();
+            _rotationSlider.Initialize();
             SetEvent();
         }
 
@@ -38,18 +51,10 @@ namespace UI
         /// </summary>
         private void SetEvent()
         {
-            _resetButton.OnClickCallBack += () => OnClickCallBack?.Invoke();
+            _resetButton.OnClickCallBack += ()=>_rotationSlider.SetIsCreated(false);
+            _resetButton.OnClickCallBack += ()=>_scaleSlider.SetIsCreated(false);
         }
 
-        /// <summary>
-        /// オブジェクトを生成したかのフラグの値を設定する
-        /// </summary>
-        /// <param name="IsCreated">設定したい真偽値</param>
-        public void SetIsCreated(bool IsCreated)
-        {
-            _resetButton.SetIsCreated(IsCreated);
-        }
-        
         /// <summary>
         /// 文字を表示する
         /// </summary>

@@ -1,8 +1,8 @@
 using UniRx;
 
-namespace UI.ResetButton
+namespace UI.ScaleSlider
 {
-    public class ResetButtonModel : IResetButtonModel
+    public class ScaleSliderModel : IScaleSliderModel
     {
         /// <summary>
         /// オブジェクトを生成したかのフラグ
@@ -12,13 +12,13 @@ namespace UI.ResetButton
         private BoolReactiveProperty _isCreatedProp;
 
         /// <summary>
-        /// コンストラクタ
+        /// 
         /// </summary>
-        public ResetButtonModel()
+        public ScaleSliderModel()
         {
             _isCreatedProp = new BoolReactiveProperty(false);
         }
-
+        
         /// <summary>
         /// オブジェクトを生成したかのフラグの値を設定する
         /// </summary>

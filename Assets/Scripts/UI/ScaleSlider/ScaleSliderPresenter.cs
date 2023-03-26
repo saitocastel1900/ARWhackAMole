@@ -1,25 +1,21 @@
 using System;
+using BlackbeardCrisis;
 using UniRx;
 using Zenject;
 
-namespace UI.ResetButton
+namespace UI.ScaleSlider
 {
-    public class ResetButtonPresenter : IDisposable
+    public class ScaleSliderPresenter : IDisposable
     {
-        /// <summary>
-        /// クリックしたときに呼ばれる
-        /// </summary>
-        public event Action OnClickCallBack;
-        
-        /// <summary>
-        /// View
-        /// </summary>
-        private ResetButtonView _view;
-        
         /// <summary>
         /// Model
         /// </summary>
-        private IResetButtonModel _model;
+        private IScaleSliderModel _model;
+
+        /// <summary>
+        /// View
+        /// </summary>
+        private ScaleSliderView _view;
 
         /// <summary>
         /// PlacedObjectManager
@@ -30,11 +26,11 @@ namespace UI.ResetButton
         /// Disposable
         /// </summary>
         private  CompositeDisposable _compositeDisposable;
-        
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ResetButtonPresenter(IResetButtonModel model,ResetButtonView view)
+        public ScaleSliderPresenter(IScaleSliderModel model,ScaleSliderView view)
         {
             _model = model;
             _view = view;
@@ -46,6 +42,7 @@ namespace UI.ResetButton
         public void Initialize()
         {
             _compositeDisposable = new CompositeDisposable();
+            _view.Initialize();
             Bind();
             SetEvent();
         }
@@ -56,7 +53,6 @@ namespace UI.ResetButton
         private void Bind()
         {
             _model.IsCreatedProp
-                .DistinctUntilChanged()
                 .Subscribe(_view.SetShowView)
                 .AddTo(_compositeDisposable);
         }
@@ -66,28 +62,41 @@ namespace UI.ResetButton
         /// </summary>
         private void SetEvent()
         {
-            //クリックした時に設置したオブジェクトを破壊する
-            _view.OnClickButton()
-                .Subscribe(_=>OnClick())
+            //スライダーを動かしたら、オブジェクトの大きさを変える
+            _view.OnSliderValueChanged()
+                .DistinctUntilChanged()
+                .Subscribe(OnValueChanged)
                 .AddTo(_compositeDisposable);
-
-            //オブジェクトを生成したと時に、ボタンを表示する
+            
+            //オブジェクトが生成されたら、スライダーを表示する
             _placedObjectManager
                 .OnCreatedObjectCallBack
-                .Subscribe(_=>_model.SetIsCreated(true))
+                .Subscribe(_=>
+                {
+                    _model.SetIsCreated(true);
+                    _view.AdjustmentSliderPosition();
+                })
                 .AddTo(_compositeDisposable);
         }
-        
+
         /// <summary>
-        /// ボタンをクリックした時のイベント
-        /// </summary>.
-        private void OnClick()
+        /// スライダーを動かしたら呼ばれる
+        /// </summary>
+        /// <param name="value"></param>
+        private void OnValueChanged(float value)
         {
-            _placedObjectManager.PlacedObjectDestroy();
-            _model.SetIsCreated(false);
-            OnClickCallBack?.Invoke();
+            _placedObjectManager.GetPlacedObject()?.GetComponent<BlackbeardCrisisScaleAndRotation>().ScaleChanged(value);
         }
 
+        /// <summary>
+        /// オブジェクトを生成したかのフラグの値を設定する
+        /// </summary>
+        /// <param name="IsCreated">設定したい真偽値</param>
+        public void SetIsCreated(bool IsCreated)
+        {
+            _model.SetIsCreated(IsCreated);
+        }
+        
         /// <summary>
         /// Dispose
         /// </summary>

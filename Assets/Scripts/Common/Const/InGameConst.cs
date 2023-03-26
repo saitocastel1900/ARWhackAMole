@@ -1,18 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InGameConst : MonoBehaviour
+namespace Const
 {
-    // Start is called before the first frame update
-    void Start()
+    public class InGameConst
     {
-        
-    }
+        /// <summary>
+        /// 設置するオブジェクトのID
+        /// </summary>
+        public static string PlacedObjectId = "player_01";
 
-    // Update is called once per frame
-    void Update()
-    {
+        /// <summary>
+        /// 設置時の大きさ
+        /// </summary>
+        public static float InitialScale=1f;
+
+        /// <summary>
+        /// 最小の大きさ
+        /// </summary>
+        public const float MinScale = 0.2f;
+
+        /// <summary>
+        /// 最大の大きさ
+        /// </summary>
+        public const float MaxScale = 2f;
+
+        /// <summary>
+        /// 設置時の角度
+        /// </summary>
+        public static Quaternion InitialRotation=Quaternion.identity;
         
+        /// <summary>
+        /// 最小の角度
+        /// </summary>
+        public const float MinRotation = 0f;
+
+        /// <summary>
+        /// 最大の角度
+        /// </summary>
+        public const float MaxRotation = 360f;
     }
 }

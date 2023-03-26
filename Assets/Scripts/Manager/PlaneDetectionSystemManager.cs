@@ -1,18 +1,13 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using Zenject;
 
-namespace Manager.ARSystemManager
+namespace ARSystemManager
 {
     public class PlaneDetectionSystemManager : MonoBehaviour
     {
-        /// <summary>
-        /// 平面をレイキャストした時に呼ばれる
-        /// </summary>
-        public event Action<Vector3> OnRaycastCallBack;
-
         /// <summary>
         /// ARPlaneManager
         /// </summary>
@@ -22,6 +17,11 @@ namespace Manager.ARSystemManager
         /// ARRaycastManager
         /// </summary>
         [SerializeField] private ARRaycastManager _raycastManager;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject] private IPlacedObjectManager _placedObjectManager;
 
         /// <summary>
         /// スマートフォンをタッチした場所
@@ -42,10 +42,9 @@ namespace Manager.ARSystemManager
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="instantiatedObject"></param>
-        public void PlaneDetectionSetObject(GameObject instantiatedObject)
+        public void PlaneDetectionSetObject()
         {
-            if (instantiatedObject != null)
+            if (_placedObjectManager.GetPlacedObject() != null)
             {
                 foreach (var plane in _planeManager.trackables)
                 {
@@ -56,15 +55,14 @@ namespace Manager.ARSystemManager
             }
 
 #if UNITY_EDITOR
-
             if (Input.GetMouseButtonUp(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit raycastHit;
-                
-                if (Physics.Raycast(ray, out raycastHit, 30.0f) && instantiatedObject == null)
+
+                if (Physics.Raycast(ray, out raycastHit, 30.0f) && _placedObjectManager.GetPlacedObject() == null)
                 {
-                    OnRaycastCallBack(raycastHit.point);
+                    _placedObjectManager.PlacedObjectCreate(raycastHit.point,Quaternion.FromToRotation(Vector3.up,raycastHit.normal));
                 }
             }
 #else
@@ -73,9 +71,9 @@ namespace Manager.ARSystemManager
                 _touchPosition = Input.GetTouch(0).position;
                 var hits = new List<ARRaycastHit>();
 
-                if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes) && instantiatedObject == null)
+                if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes) && _placedObjectManager.GetPlacedObject()==null)
                 {
-                    OnRaycastCallBack(hits[0].pose.position);
+                    _placedObjectManager.PlacedObjectCreate(hits[0].pose.position,hits[0].pose.rotation);
                 }
             }
 #endif
