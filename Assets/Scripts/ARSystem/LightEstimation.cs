@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.XR.ARFoundation;
 
-namespace Manager.ARSystemManager
+namespace ARSystem
 {
-   public class LightEstimationSystemManager : MonoBehaviour
+   public class LightEstimation : MonoBehaviour
    {
       /// <summary>
       /// ARCameraManager

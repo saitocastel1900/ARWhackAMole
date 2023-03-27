@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlacedObjectDataBase
   m_EditorClassIdentifier: 
   _placedObjectData:
-  - Item: {fileID: 5562848074733917695, guid: 1d2d413488df590459f0187a1fe34ed0, type: 3}
+  - Item: {fileID: 2926339418794188720, guid: 9ee70a965c29ca440818c460caa91f5f, type: 3}
     Id: player_01
     ExplainText: "unity\u3061\u3083\u3093\u3067\u3059"

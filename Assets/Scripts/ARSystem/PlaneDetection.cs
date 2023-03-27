@@ -4,9 +4,9 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using Zenject;
 
-namespace ARSystemManager
+namespace ARSystem
 {
-    public class PlaneDetectionSystemManager : MonoBehaviour
+    public class PlaneDetection : MonoBehaviour
     {
         /// <summary>
         /// ARPlaneManager
@@ -19,7 +19,7 @@ namespace ARSystemManager
         [SerializeField] private ARRaycastManager _raycastManager;
 
         /// <summary>
-        /// 
+        /// PlacedObjectManager
         /// </summary>
         [Inject] private IPlacedObjectManager _placedObjectManager;
 
