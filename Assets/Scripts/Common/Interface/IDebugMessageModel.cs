@@ -5,7 +5,7 @@ namespace UI.DebugMessage
     public interface IDebugMessageModel
     {
         /// <summary>
-        /// コンストラクタ
+        /// 表示したい文字
         /// </summary>
         public IReactiveProperty<string> MessageTextProp { get; }
 

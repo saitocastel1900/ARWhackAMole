@@ -2,6 +2,7 @@ using UI.DebugMessage;
 using UI.ResetButton;
 using UI.RotationSlider;
 using UI.ScaleSlider;
+using UI.ScoreText;
 using UnityEngine;
 using Zenject;
 
@@ -29,6 +30,16 @@ namespace UI
         /// </summary>
         [Inject] private RotationSliderPresenter _rotationSlider;
 
+        /// <summary>
+        /// Text
+        /// </summary>
+        [Inject] private ScoreTextPresenter _scoreText;
+
+        /// <summary>
+        /// Result
+        /// </summary>
+        [SerializeField] private ResultUI _result;
+
         private void Start()
         {
             Initialized();
@@ -43,6 +54,7 @@ namespace UI
             _messageText.Initialize();
             _scaleSlider.Initialize();
             _rotationSlider.Initialize();
+            _scoreText.Initialize();
             SetEvent();
         }
 
@@ -53,15 +65,16 @@ namespace UI
         {
             _resetButton.OnClickCallBack += ()=>_rotationSlider.SetIsCreated(false);
             _resetButton.OnClickCallBack += ()=>_scaleSlider.SetIsCreated(false);
+            _scoreText.OnScoreOverCallBack += () => _result.SetView(true);
+            _result.OnClickCallBack += _scoreText.Reset;
         }
 
         /// <summary>
-        /// 文字を表示する
+        /// スコアを加算
         /// </summary>
-        /// <param name="message">表示したい文字</param>
-        public void SetMessageText(string message)
+        public void AddScore()
         {
-            _messageText.SetMessageText(message);
+            _scoreText.AddScore();
         }
     }
 }

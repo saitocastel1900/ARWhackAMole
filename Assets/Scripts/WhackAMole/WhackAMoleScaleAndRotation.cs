@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using Const;
 
-namespace BlackbeardCrisis
+namespace WhackAMole
 {
-    public class BlackbeardCrisisScaleAndRotation : MonoBehaviour
+    public class WhackAMoleScaleAndRotation : MonoBehaviour
     {
         /// <summary>
         /// 前回のY軸回転角度
