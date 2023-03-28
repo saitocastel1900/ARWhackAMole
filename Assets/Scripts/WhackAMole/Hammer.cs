@@ -5,16 +5,15 @@ namespace WhackAMole
 {
     public class Hammer : MonoBehaviour
     {
-#if UNITY_EDITOR
-        void Update () 
+        void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit = new RaycastHit();
-                if(Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if(hit.transform.gameObject.CompareTag("Mole"))
+                    if (hit.transform.gameObject.CompareTag("Mole"))
                     {
                         hit.transform.gameObject.GetComponent<MoleMover>().Hit();
 
@@ -23,8 +22,5 @@ namespace WhackAMole
                 }
             }
         }
-#else
-
-#endif
     }
 }

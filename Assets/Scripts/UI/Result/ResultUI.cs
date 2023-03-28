@@ -12,14 +12,13 @@ public class ResultUI : MonoBehaviour
     {
         Initialize();
         SetEvent();
-
-        SetView(false);
     }
 
     private void Initialize()
     {
         _restart.Initialize();
         _quit.Initialize();
+        SetView(false);
     }
 
     private void SetEvent()
