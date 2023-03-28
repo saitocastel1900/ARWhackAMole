@@ -35,6 +35,11 @@ namespace UI
         /// </summary>
         [Inject] private ScoreTextPresenter _scoreText;
 
+        /// <summary>
+        /// Result
+        /// </summary>
+        [SerializeField] private ResultUI _result;
+
         private void Start()
         {
             Initialized();
@@ -60,6 +65,8 @@ namespace UI
         {
             _resetButton.OnClickCallBack += ()=>_rotationSlider.SetIsCreated(false);
             _resetButton.OnClickCallBack += ()=>_scaleSlider.SetIsCreated(false);
+            _scoreText.OnScoreOverCallBack += () => _result.SetView(true);
+            _result.OnClickCallBack += _scoreText.Reset;
         }
 
         /// <summary>

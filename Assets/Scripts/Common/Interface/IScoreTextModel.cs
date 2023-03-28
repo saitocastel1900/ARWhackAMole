@@ -1,7 +1,10 @@
+using System;
 using UniRx;
 
 public interface IScoreTextModel
 {
+    public event Action OnScoreOverCallBack;
+    
     /// <summary>
     /// 表示するスコア
     /// </summary>
@@ -11,4 +14,6 @@ public interface IScoreTextModel
     /// スコアを加算する
     /// </summary>
     public void AddScore();
+
+    public void Reset();
 }

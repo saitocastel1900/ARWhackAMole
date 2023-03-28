@@ -1,9 +1,12 @@
+using System;
 using UniRx;
 
 namespace UI.ScoreText
 {
     public class ScoreTextModel : IScoreTextModel
     {
+        public event Action OnScoreOverCallBack;
+        
         /// <summary>
         /// 表示するスコア
         /// </summary>
@@ -24,6 +27,16 @@ namespace UI.ScoreText
         public void AddScore()
         {
             _scoreProp.Value++;
+
+            if (_scoreProp.Value >= 5)
+            {
+                OnScoreOverCallBack?.Invoke();
+            }
+        }
+
+        public void Reset()
+        {
+            _scoreProp.Value = 0;
         }
     }
 }

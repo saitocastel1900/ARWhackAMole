@@ -5,6 +5,8 @@ namespace UI.ScoreText
 {
     public class ScoreTextPresenter: IDisposable
     {
+        public event Action OnScoreOverCallBack;
+        
         /// <summary>
         /// Model
         /// </summary>
@@ -37,6 +39,7 @@ namespace UI.ScoreText
             _compositeDisposable = new CompositeDisposable();
             _view.Initialize();
             Bind();
+            SetEvent();
         }
 
         /// <summary>
@@ -49,6 +52,11 @@ namespace UI.ScoreText
                 .Subscribe(_view.SetText)
                 .AddTo(_compositeDisposable);
         }
+
+        private void SetEvent()
+        {
+            _model.OnScoreOverCallBack += ()=> OnScoreOverCallBack?.Invoke();
+        }
         
         /// <summary>
         /// スコアを加算する
@@ -56,6 +64,14 @@ namespace UI.ScoreText
         public void AddScore()
         {
             _model.AddScore();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Reset()
+        {
+            _model.Reset();
         }
         
         /// <summary>
