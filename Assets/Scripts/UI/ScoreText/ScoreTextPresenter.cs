@@ -1,29 +1,29 @@
 using System;
 using UniRx;
 
-namespace UI.DebugMessage
+namespace UI.ScoreText
 {
-    public class DebugMessagePresenter : IDisposable
+    public class ScoreTextPresenter: IDisposable
     {
         /// <summary>
         /// Model
         /// </summary>
-        private  IDebugMessageModel _model;
+        private IScoreTextModel _model;
         
         /// <summary>
         /// View
         /// </summary>
-        private  DebugMessageView _view;
+        private ScoreTextView _view;
 
         /// <summary>
         /// Disposable
         /// </summary>
-        private  CompositeDisposable _compositeDisposable;
+        private CompositeDisposable _compositeDisposable;
         
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public DebugMessagePresenter(IDebugMessageModel model,DebugMessageView view)
+        public ScoreTextPresenter(IScoreTextModel model,ScoreTextView view)
         {
             _model = model;
             _view = view;
@@ -44,18 +44,18 @@ namespace UI.DebugMessage
         /// </summary>
         private void Bind()
         {
-            _model.MessageTextProp
-                .Subscribe(_view.AddMessage)
+            _model
+                .ScoreProp
+                .Subscribe(_view.SetText)
                 .AddTo(_compositeDisposable);
         }
-
+        
         /// <summary>
-        /// 文字を表示する
+        /// スコアを加算する
         /// </summary>
-        /// <param name="message">表示したい文字</param>
-        public void SetMessageText(string message)
+        public void AddScore()
         {
-            _model.SetMessageText(message);
+            _model.AddScore();
         }
         
         /// <summary>

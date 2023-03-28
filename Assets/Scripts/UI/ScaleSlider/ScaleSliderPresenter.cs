@@ -1,5 +1,5 @@
 using System;
-using BlackbeardCrisis;
+using WhackAMole;
 using UniRx;
 using Zenject;
 
@@ -85,7 +85,7 @@ namespace UI.ScaleSlider
         /// <param name="value"></param>
         private void OnValueChanged(float value)
         {
-            _placedObjectManager.GetPlacedObject()?.GetComponent<BlackbeardCrisisScaleAndRotation>().ScaleChanged(value);
+            _placedObjectManager.GetPlacedObject()?.GetComponent<WhackAMoleScaleAndRotation>().ScaleChanged(value);
         }
 
         /// <summary>

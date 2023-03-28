@@ -9,6 +9,14 @@ namespace UI.DebugMessage
         /// Text
         /// </summary>
         [SerializeField] private Text _messageText;
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public void Initialize()
+        {
+            _messageText.gameObject.GetComponent<Text>().enabled = false;
+        }
         
         /// <summary>
         /// 追加で文字を設定する

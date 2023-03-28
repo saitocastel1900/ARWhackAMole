@@ -1,5 +1,5 @@
 using System;
-using BlackbeardCrisis;
+using WhackAMole;
 using UniRx;
 using Zenject;
 
@@ -48,7 +48,7 @@ namespace UI.RotationSlider
         }
 
         /// <summary>
-        /// Bimd
+        /// Bind
         /// </summary>
         private void Bind()
         {
@@ -84,7 +84,7 @@ namespace UI.RotationSlider
         /// <param name="value"></param>
         private void OnValueChanged(float value)
         {
-            _placedObjectManager.GetPlacedObject()?.GetComponent<BlackbeardCrisisScaleAndRotation>().RotationChanged(value);
+            _placedObjectManager.GetPlacedObject()?.GetComponent<WhackAMoleScaleAndRotation>().RotationChanged(value);
         }
 
         /// <summary>
