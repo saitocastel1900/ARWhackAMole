@@ -26,7 +26,7 @@ namespace UI.ScaleSlider
         /// </summary>
         public void AdjustmentSliderPosition()
         {
-            _slider.value=(InGameConst.InitialScale-InGameConst.MinScale)/(InGameConst.MaxScale-InGameConst.MinScale);
+            _slider.value=(InGameConst.PlacedObjectInitialScale-InGameConst.PlacedObjectMinScale)/(InGameConst.PlacedObjectMaxScale-InGameConst.PlacedObjectMinScale);
         }
         
         /// <summary>

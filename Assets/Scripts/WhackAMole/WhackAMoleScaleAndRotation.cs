@@ -16,7 +16,7 @@ namespace WhackAMole
         /// <param name="value">大きさ</param>
         public void ScaleChanged(float value)
         {
-            var scale = value * (InGameConst.MaxScale - InGameConst.MinScale) + InGameConst.MinScale;
+            var scale = value * (InGameConst.PlacedObjectMaxScale - InGameConst.PlacedObjectMinScale) + InGameConst.PlacedObjectMinScale;
             transform.localScale = Vector3.one / scale;
         }
 
@@ -27,7 +27,7 @@ namespace WhackAMole
         public void RotationChanged(float value)
         {
             //Y軸の回転制限
-            var rotY = value * (InGameConst.MaxRotation - InGameConst.MinRotation) + InGameConst.MinRotation;
+            var rotY = value * (InGameConst.PlacedObjectMaxRotation - InGameConst.PlacedObjectMinRotation) + InGameConst.PlacedObjectMinRotation;
             float rotationYDelta = rotY - _prevRotationAngle;
             var rotation = Quaternion.Euler(0, rotationYDelta, 0);
             transform.localRotation *= rotation;

@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using Zenject;
 
-namespace ARSystem
+namespace ARManager
 {
-    public class PlaneDetection : MonoBehaviour
+    [RequireComponent(typeof(ARPlaneManager))]
+    [RequireComponent(typeof(ARRaycastManager))]
+    public class PlaneDetection : BaseARManager
     {
         /// <summary>
         /// ARPlaneManager
@@ -19,11 +20,6 @@ namespace ARSystem
         [SerializeField] private ARRaycastManager _raycastManager;
 
         /// <summary>
-        /// PlacedObjectManager
-        /// </summary>
-        [Inject] private IPlacedObjectManager _placedObjectManager;
-
-        /// <summary>
         /// スマートフォンをタッチした場所
         /// </summary>
         private Vector3 _touchPosition;
@@ -31,7 +27,7 @@ namespace ARSystem
         /// <summary>
         /// 初期化
         /// </summary>
-        public void Initialize()
+        protected override void OnInitialize()
         {
             if (_planeManager == null || _raycastManager == null)
             {
@@ -39,10 +35,15 @@ namespace ARSystem
             }
         }
 
+        private void Update()
+        {
+            PlaneDetectionSetObject();
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        public void PlaneDetectionSetObject()
+        private void PlaneDetectionSetObject()
         {
             if (_placedObjectManager.GetPlacedObject() != null)
             {
@@ -55,23 +56,23 @@ namespace ARSystem
             }
 
 #if UNITY_EDITOR
-            if (Input.GetMouseButtonUp(0))
+            if (_input.InputTap())
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit raycastHit;
 
-                if (Physics.Raycast(ray, out raycastHit, 30.0f) && _placedObjectManager.GetPlacedObject() == null)
+                if (Physics.Raycast(ray, out raycastHit, 30.0f))
                 {
                     _placedObjectManager.PlacedObjectCreate(raycastHit.point,Quaternion.FromToRotation(Vector3.up,raycastHit.normal));
                 }
             }
-#else
-            if (Input.touchCount > 0)
+#elif UNITY_ANDROID
+            if (_input.InputTap())
             {
                 _touchPosition = Input.GetTouch(0).position;
                 var hits = new List<ARRaycastHit>();
 
-                if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes) && _placedObjectManager.GetPlacedObject()==null)
+                if (_raycastManager.Raycast(_touchPosition, hits, TrackableType.Planes))
                 {
                     _placedObjectManager.PlacedObjectCreate(hits[0].pose.position,hits[0].pose.rotation);
                 }

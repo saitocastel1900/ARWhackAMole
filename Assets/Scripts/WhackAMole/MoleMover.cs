@@ -1,56 +1,33 @@
 using DG.Tweening;
-using UnityEngine;
+using UniRx;
+using Utility;
 
 namespace WhackAMole
 {
-    public class MoleMover : MonoBehaviour
+    public class MoleMover : BaseMole
     {
-        Vector3 groundLevel;
-        Vector3 undergroundLevel;
-        public GameObject effect;
+        /// <summary>
+        /// 
+        /// </summary>
+        private ReactiveProperty<bool> _isGrounded = new BoolReactiveProperty(true);
 
-        bool isOnGround = true;
-        float time = 0;
-
-        public void Hit()
+        protected override void OnInitialize()
         {
-            GameObject g = Instantiate(effect, transform.position+new Vector3(0, 0.04f, 0), effect.transform.rotation);
-            Destroy(g, 1.0f);
+            //
+            _moleCore
+                .OnDamagedCallBack
+                .Subscribe(_ =>
+                {
+                    _isGrounded.Value = true;
+                })
+                .AddTo(this);
 
-            this.time = 0;        
-
-            Down();
-        }
-
-        void Up()
-        {
-            transform.DOMoveY(groundLevel.y, 0.5f);
-            this.isOnGround = true;
-        }
-
-        void Down()
-        {
-            transform.DOMoveY(undergroundLevel.y, 0.5f);
-            this.isOnGround = false;
-        }
-
-        void Start()
-        {
-            this.groundLevel = transform.position;
-            this.undergroundLevel = this.groundLevel - new Vector3(0, 0.2f, 0);
-
-            // 地中に隠す
-            Down();
-        }
-
-        void Update()
-        {
-            this.time += Time.deltaTime;
-
-            if (this.time > 2.0f)
+            //
+            _isGrounded
+                .DistinctUntilChanged()
+                .Subscribe(value =>
             {
-                this.time = 0;
-                if (this.isOnGround)
+                if (value)
                 {
                     Down();
                 }
@@ -58,7 +35,29 @@ namespace WhackAMole
                 {
                     Up();
                 }
-            }
+            }).AddTo(this);
+            
+            Down();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Up()
+        {
+            InGameAnimationUtility.MoleUpTween(transform)
+                .SetEase(Ease.Linear)
+                .SetLink(this.gameObject).onComplete+=()=>_isGrounded.Value = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Down()
+        {
+            InGameAnimationUtility.MoleDownTween(transform)
+                .SetEase(Ease.Linear)
+                .SetLink(this.gameObject).onComplete+=()=>_isGrounded.Value = false;
         }
     }
 }

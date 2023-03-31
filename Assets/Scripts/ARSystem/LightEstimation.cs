@@ -2,9 +2,10 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.XR.ARFoundation;
 
-namespace ARSystem
+namespace ARManager
 {
-   public class LightEstimation : MonoBehaviour
+   [RequireComponent(typeof(ARCameraManager))]
+   public class LightEstimation : BaseARManager
    {
       /// <summary>
       /// ARCameraManager
@@ -39,8 +40,12 @@ namespace ARSystem
       /// <summary>
       /// 初期化
       /// </summary>
-      public void Initialize()
+      protected override void OnInitialize()
       {
+         if (_cameraManager==null)
+         {
+            Application.Quit();
+         }
          SetEventHandler();
       }
 

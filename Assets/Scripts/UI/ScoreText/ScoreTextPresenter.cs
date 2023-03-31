@@ -5,6 +5,9 @@ namespace UI.ScoreText
 {
     public class ScoreTextPresenter: IDisposable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public event Action OnScoreOverCallBack;
         
         /// <summary>

@@ -26,7 +26,7 @@ namespace UI.RotationSlider
         /// </summary>
         public void AdjustmentSliderPosition()
         {
-            _slider.value=(InGameConst.InitialRotation.eulerAngles.y-InGameConst.MinRotation)/(InGameConst.MaxRotation-InGameConst.MinRotation);
+            _slider.value=(InGameConst.PlacedObjectInitialRotation.eulerAngles.y-InGameConst.PlacedObjectMinRotation)/(InGameConst.PlacedObjectMaxRotation-InGameConst.PlacedObjectMinRotation);
         }
         
         /// <summary>
