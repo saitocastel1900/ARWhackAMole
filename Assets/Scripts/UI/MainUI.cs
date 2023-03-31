@@ -66,7 +66,7 @@ namespace UI
             _resetButton.OnClickCallBack += ()=>_rotationSlider.SetIsCreated(false);
             _resetButton.OnClickCallBack += ()=>_scaleSlider.SetIsCreated(false);
             _scoreText.OnScoreOverCallBack += () => _result.SetView(true);
-            _result.OnClickCallBack += _scoreText.Reset;
+            _result.OnResetButtonClickCallBack += _scoreText.Reset;
         }
 
         /// <summary>
