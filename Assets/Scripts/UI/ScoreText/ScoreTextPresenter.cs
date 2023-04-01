@@ -1,9 +1,10 @@
 using System;
 using UniRx;
+using Zenject;
 
 namespace UI.ScoreText
 {
-    public class ScoreTextPresenter: IDisposable
+    public class ScoreTextPresenter: IDisposable , IInitializable
     {
         /// <summary>
         /// 

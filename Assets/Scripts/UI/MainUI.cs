@@ -42,19 +42,6 @@ namespace UI
 
         private void Start()
         {
-            Initialized();
-        }
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        private void Initialized()
-        {
-            _resetButton.Initialize();
-            _messageText.Initialize();
-            _scaleSlider.Initialize();
-            _rotationSlider.Initialize();
-            _scoreText.Initialize();
             SetEvent();
         }
 

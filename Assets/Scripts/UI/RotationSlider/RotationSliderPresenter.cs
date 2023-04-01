@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UI.RotationSlider
 {
-    public class RotationSliderPresenter : IDisposable
+    public class RotationSliderPresenter : IDisposable , IInitializable
     {
         /// <summary>
         /// Model
@@ -20,7 +20,7 @@ namespace UI.RotationSlider
         /// <summary>
         /// PlacedObjectManager
         /// </summary>
-        [Inject] private IPlacedObjectManager _placedObjectManager;
+        private IPlacedObjectManager _placedObjectManager;
 
         /// <summary>
         /// Disposable
@@ -30,10 +30,11 @@ namespace UI.RotationSlider
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RotationSliderPresenter(IRotationSliderModel model,RotationSliderView view)
+        public RotationSliderPresenter(IRotationSliderModel model,RotationSliderView view, IPlacedObjectManager placedObjectManager)
         {
             _model = model;
             _view = view;
+            _placedObjectManager = placedObjectManager;
         }
         
         /// <summary>

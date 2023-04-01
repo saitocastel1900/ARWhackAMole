@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UI.ResetButton
 {
-    public class ResetButtonPresenter : IDisposable
+    public class ResetButtonPresenter : IDisposable , IInitializable
     {
         /// <summary>
         /// クリックしたときに呼ばれる
