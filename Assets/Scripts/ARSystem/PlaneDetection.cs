@@ -56,7 +56,7 @@ namespace ARManager
             }
 
 #if UNITY_EDITOR
-            if (_input.InputTap())
+            if (_input.InputTapPush())
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit raycastHit;

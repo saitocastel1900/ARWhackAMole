@@ -1,5 +1,15 @@
 
 public interface IInputEventProvider
 {
-    public bool InputTap();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool InputTapRelease();
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool InputTapPush();
 }
