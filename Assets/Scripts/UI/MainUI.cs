@@ -1,5 +1,6 @@
 using UI.DebugMessage;
 using UI.ResetButton;
+using UI.Result;
 using UI.RotationSlider;
 using UI.ScaleSlider;
 using UI.ScoreText;
@@ -42,19 +43,6 @@ namespace UI
 
         private void Start()
         {
-            Initialized();
-        }
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        private void Initialized()
-        {
-            _resetButton.Initialize();
-            _messageText.Initialize();
-            _scaleSlider.Initialize();
-            _rotationSlider.Initialize();
-            _scoreText.Initialize();
             SetEvent();
         }
 

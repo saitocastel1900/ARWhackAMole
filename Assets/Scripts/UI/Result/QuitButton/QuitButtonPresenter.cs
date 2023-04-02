@@ -1,35 +1,32 @@
 using System;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
-namespace UI.ScoreText
+namespace UI.Result.QuitButton
 {
-    public class ScoreTextPresenter: IDisposable , IInitializable
+    public class QuitButtonPresenter : IDisposable, IInitializable
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public event Action OnScoreOverCallBack;
-        
         /// <summary>
         /// Model
         /// </summary>
-        private IScoreTextModel _model;
-        
+        private IQuitButtonModel _model;
+
         /// <summary>
         /// View
         /// </summary>
-        private ScoreTextView _view;
+        private QuitButtonView _view;
+
 
         /// <summary>
         /// Disposable
         /// </summary>
         private CompositeDisposable _compositeDisposable;
-        
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ScoreTextPresenter(IScoreTextModel model,ScoreTextView view)
+        public QuitButtonPresenter(IQuitButtonModel model, QuitButtonView view)
         {
             _model = model;
             _view = view;
@@ -41,7 +38,6 @@ namespace UI.ScoreText
         public void Initialize()
         {
             _compositeDisposable = new CompositeDisposable();
-            _view.Initialize();
             Bind();
             SetEvent();
         }
@@ -51,33 +47,39 @@ namespace UI.ScoreText
         /// </summary>
         private void Bind()
         {
-            _model
-                .ScoreProp
-                .Subscribe(_view.SetText)
+            _model.IsShowProp
+                .DistinctUntilChanged()
+                .Subscribe(_view.SetActive)
                 .AddTo(_compositeDisposable);
-        }
-
-        private void SetEvent()
-        {
-            _model.OnScoreOverCallBack += ()=> OnScoreOverCallBack?.Invoke();
-        }
-        
-        /// <summary>
-        /// スコアを加算する
-        /// </summary>
-        public void AddScore()
-        {
-            _model.AddScore();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void Reset()
+        private void SetEvent()
         {
-            _model.Reset();
+            _view.OnClickButton()
+                .Subscribe(_ => OnClickEvent())
+                .AddTo(_compositeDisposable);
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OnClickEvent()
+        {
+            Application.Quit();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isShow"></param>
+        public void SetIsShow(bool isShow)
+        {
+            _model.SetIsShow(isShow);
+        }
+
         /// <summary>
         /// Dispose
         /// </summary>

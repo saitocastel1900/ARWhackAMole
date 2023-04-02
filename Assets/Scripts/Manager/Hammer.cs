@@ -13,7 +13,7 @@ namespace Manager
         private void Start()
         {
             this.UpdateAsObservable()
-                .Where(_ => _input.InputTap())
+                .Where(_ => _input.InputTapRelease())
                 .Subscribe(_ =>
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

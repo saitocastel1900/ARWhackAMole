@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UI.ResetButton
 {
-    public class ResetButtonPresenter : IDisposable
+    public class ResetButtonPresenter : IDisposable , IInitializable
     {
         /// <summary>
         /// クリックしたときに呼ばれる
@@ -25,7 +25,7 @@ namespace UI.ResetButton
         /// <summary>
         /// PlacedObjectManager
         /// </summary>
-        [Inject] private IPlacedObjectManager _placedObjectManager;
+        private IPlacedObjectManager _placedObjectManager;
 
         /// <summary>
         /// Disposable
@@ -35,10 +35,11 @@ namespace UI.ResetButton
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ResetButtonPresenter(IResetButtonModel model,ResetButtonView view)
+        public ResetButtonPresenter(IResetButtonModel model,ResetButtonView view,IPlacedObjectManager placedObjectManager)
         {
             _model = model;
             _view = view;
+            _placedObjectManager = placedObjectManager;
         }
         
         /// <summary>
@@ -56,9 +57,9 @@ namespace UI.ResetButton
         /// </summary>
         private void Bind()
         {
-            _model.IsCreatedProp
+            _model.IsInteractableProp
                 .DistinctUntilChanged()
-                .Subscribe(_view.SetShowView)
+                .Subscribe(_view.SetInteractable)
                 .AddTo(_compositeDisposable);
         }
 
@@ -75,7 +76,7 @@ namespace UI.ResetButton
             //オブジェクトを生成したと時に、ボタンを表示する
             _placedObjectManager
                 .OnCreatedObjectCallBack
-                .Subscribe(_=>_model.SetIsCreated(true))
+                .Subscribe(_=>_model.SetIsInteractable(true))
                 .AddTo(_compositeDisposable);
         }
         
@@ -85,7 +86,7 @@ namespace UI.ResetButton
         private void OnClick()
         {
             _placedObjectManager.PlacedObjectDestroy();
-            _model.SetIsCreated(false);
+            _model.SetIsInteractable(false);
             OnClickCallBack?.Invoke();
         }
 

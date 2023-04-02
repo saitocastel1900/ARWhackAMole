@@ -41,10 +41,10 @@ namespace UI.ScaleSlider
         /// <summary>
         /// オブジェクト表示する
         /// </summary>
-        /// <param name="isView">表示するかの真偽値</param>
-        public void SetShowView(bool isView)
+        /// <param name="isInteractable">表示するかの真偽値</param>
+        public void SetInteractable(bool isInteractable)
         {
-            _slider.interactable = isView;
+            _slider.interactable = isInteractable;
         }
     }
 }

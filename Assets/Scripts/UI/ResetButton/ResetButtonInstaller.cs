@@ -6,7 +6,7 @@ public class ResetButtonInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<ResetButtonPresenter>().AsCached().NonLazy();
+        Container.Bind(typeof(ResetButtonPresenter),typeof(IInitializable)).To<ResetButtonPresenter>().AsCached().NonLazy();
         Container.Bind<IResetButtonModel>().To<ResetButtonModel>().AsCached();
     }
 }

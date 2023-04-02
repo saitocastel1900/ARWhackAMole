@@ -1,9 +1,10 @@
 using System;
 using UniRx;
+using Zenject;
 
 namespace UI.DebugMessage
 {
-    public class DebugMessagePresenter : IDisposable
+    public class DebugMessagePresenter : IDisposable , IInitializable
     {
         /// <summary>
         /// Model

@@ -1,76 +1,59 @@
 using System;
-using UI.ResetButton;
 using UI.Result.QuitButton;
 using UI.Result.RestartButton;
-using UniRx;
 using UnityEngine;
 using Zenject;
 
-public class ResultUI : MonoBehaviour
+namespace UI.Result
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public event Action OnResetButtonClickCallBack;
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    [SerializeField] private RestartButtonView _restart;
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    [SerializeField] private QuitButtonView _quit;
-
-    private void Start()
+    public class ResultUI : MonoBehaviour
     {
-        Initialize();
-        SetEvent();
-    }
+        /// <summary>
+        /// 
+        /// </summary>
+        public event Action OnResetButtonClickCallBack;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void Initialize()
-    {
-        SetView(false);
-    }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject] private RestartButtonPresenter _restart;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void SetEvent()
-    {
-        _restart.OnClickButton()
-            .Subscribe(_=>OnClickRestartButton())
-            .AddTo(this);
+        /// <summary>
+        /// 
+        /// </summary>
+        [Inject] private QuitButtonPresenter _quit;
 
-        _quit.OnClickButton()
-            .Subscribe(_=>OnClickQuitButton())
-            .AddTo(this);
-    }
-    
-    /// <summary>
-    /// ボタンをクリックした時のイベント
-    /// </summary>.
-    private void OnClickRestartButton()
-    {
-        OnResetButtonClickCallBack?.Invoke();
-        SetView(false);
-    }
+        //TODO:背景は表示・非表示だけなので、クラスで分けなかったが、今後は分ける予定
+        /// <summary>
+        /// 
+        /// </summary>
+        [SerializeField] private GameObject _backgroundPanel;
 
-    private void OnClickQuitButton()
-    {
-          Application.Quit();
-    }
+        private void Start()
+        {
+            //
+            SetView(false);
+            SetEvent();
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="value"></param>
-    public void SetView(bool value)
-    {
-        this.gameObject.SetActive(value);
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SetEvent()
+        {
+            _restart.OnResetButtonClickCallBack += () => OnResetButtonClickCallBack?.Invoke();
+            _restart.OnResetButtonClickCallBack += () => SetView(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetView(bool value)
+        {
+            _backgroundPanel.SetActive(value);
+            _quit.SetIsShow(value);
+            _restart.SetIsShow(value);
+        }
     }
 }

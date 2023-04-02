@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UI.RotationSlider
 {
-    public class RotationSliderPresenter : IDisposable
+    public class RotationSliderPresenter : IDisposable , IInitializable
     {
         /// <summary>
         /// Model
@@ -20,7 +20,7 @@ namespace UI.RotationSlider
         /// <summary>
         /// PlacedObjectManager
         /// </summary>
-        [Inject] private IPlacedObjectManager _placedObjectManager;
+        private IPlacedObjectManager _placedObjectManager;
 
         /// <summary>
         /// Disposable
@@ -30,10 +30,11 @@ namespace UI.RotationSlider
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RotationSliderPresenter(IRotationSliderModel model,RotationSliderView view)
+        public RotationSliderPresenter(IRotationSliderModel model,RotationSliderView view, IPlacedObjectManager placedObjectManager)
         {
             _model = model;
             _view = view;
+            _placedObjectManager = placedObjectManager;
         }
         
         /// <summary>
@@ -52,8 +53,8 @@ namespace UI.RotationSlider
         /// </summary>
         private void Bind()
         {
-            _model.IsCreatedProp
-                .Subscribe(_view.SetShowView)
+            _model.IsInteractableProp
+                .Subscribe(_view.SetInteractable)
                 .AddTo(_compositeDisposable);
         }
 
@@ -72,7 +73,7 @@ namespace UI.RotationSlider
                 .OnCreatedObjectCallBack
                 .Subscribe(_=>
                 {
-                    _model.SetIsCreated(true);
+                    _model.SetIsInteractable(true);
                     _view.AdjustmentSliderPosition();
                 })
                 .AddTo(_compositeDisposable);
@@ -93,7 +94,7 @@ namespace UI.RotationSlider
         /// <param name="IsCreated">設定したい真偽値</param>
         public void SetIsCreated(bool IsCreated)
         {
-            _model.SetIsCreated(IsCreated);
+            _model.SetIsInteractable(IsCreated);
         }
         
         /// <summary>
