@@ -1,5 +1,4 @@
 using System;
-using UI.ResetButton;
 using UI.Result.QuitButton;
 using UI.Result.RestartButton;
 using UniRx;
@@ -21,7 +20,7 @@ public class ResultUI : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    [SerializeField] private QuitButtonView _quit;
+    [Inject] private QuitButtonPresenter _quit;
 
     private void Start()
     {
@@ -45,10 +44,6 @@ public class ResultUI : MonoBehaviour
         _restart.OnClickButton()
             .Subscribe(_=>OnClickRestartButton())
             .AddTo(this);
-
-        _quit.OnClickButton()
-            .Subscribe(_=>OnClickQuitButton())
-            .AddTo(this);
     }
     
     /// <summary>
@@ -59,11 +54,7 @@ public class ResultUI : MonoBehaviour
         OnResetButtonClickCallBack?.Invoke();
         SetView(false);
     }
-
-    private void OnClickQuitButton()
-    {
-          Application.Quit();
-    }
+    
 
     /// <summary>
     /// 
@@ -72,5 +63,6 @@ public class ResultUI : MonoBehaviour
     public void SetView(bool value)
     {
         this.gameObject.SetActive(value);
+        _quit.SetIsShow(value);
     }
 }

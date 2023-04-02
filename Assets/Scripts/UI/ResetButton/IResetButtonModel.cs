@@ -7,12 +7,12 @@ namespace UI.Result.ResetButton
         /// <summary>
         /// 
         /// </summary>
-        public IReactiveProperty<bool> IsCreatedProp { get; }
+        public IReactiveProperty<bool> IsInteractableProp { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="IsCreated">設定したい真偽値</param>
-        public void SetIsCreated(bool IsCreated);
+        /// <param name="IsInteractable">設定したい真偽値</param>
+        public void SetIsInteractable(bool IsInteractable);
     }
 }

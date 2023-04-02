@@ -1,15 +1,15 @@
 using UniRx;
 
-public interface IScaleSliderModel
+public interface IRotationSliderModel
 {
     /// <summary>
     /// オブジェクトを生成したかのフラグ
     /// </summary>
-    public IReactiveProperty<bool> IsCreatedProp { get; }
+    public IReactiveProperty<bool> IsInteractableProp { get; }
 
     /// <summary>
     /// オブジェクトを生成したかのフラグの値を設定する
     /// </summary>
-    /// <param name="IsCreated">設定したい真偽値</param>
-    public void SetIsCreated(bool IsCreated);
+    /// <param name="IsInteractable">設定したい真偽値</param>
+    public void SetIsInteractable(bool IsInteractable);
 }

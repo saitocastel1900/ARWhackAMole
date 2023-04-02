@@ -53,8 +53,8 @@ namespace UI.RotationSlider
         /// </summary>
         private void Bind()
         {
-            _model.IsCreatedProp
-                .Subscribe(_view.SetShowView)
+            _model.IsInteractableProp
+                .Subscribe(_view.SetInteractable)
                 .AddTo(_compositeDisposable);
         }
 
@@ -73,7 +73,7 @@ namespace UI.RotationSlider
                 .OnCreatedObjectCallBack
                 .Subscribe(_=>
                 {
-                    _model.SetIsCreated(true);
+                    _model.SetIsInteractable(true);
                     _view.AdjustmentSliderPosition();
                 })
                 .AddTo(_compositeDisposable);
@@ -94,7 +94,7 @@ namespace UI.RotationSlider
         /// <param name="IsCreated">設定したい真偽値</param>
         public void SetIsCreated(bool IsCreated)
         {
-            _model.SetIsCreated(IsCreated);
+            _model.SetIsInteractable(IsCreated);
         }
         
         /// <summary>
