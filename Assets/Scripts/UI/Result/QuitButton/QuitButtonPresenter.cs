@@ -8,14 +8,15 @@ namespace UI.Result.QuitButton
     public class QuitButtonPresenter : IDisposable, IInitializable
     {
         /// <summary>
+        /// Model
+        /// </summary>
+        private IQuitButtonModel _model;
+
+        /// <summary>
         /// View
         /// </summary>
         private QuitButtonView _view;
 
-        /// <summary>
-        /// Model
-        /// </summary>
-        private IQuitButtonModel _model;
 
         /// <summary>
         /// Disposable
@@ -58,7 +59,7 @@ namespace UI.Result.QuitButton
         private void SetEvent()
         {
             _view.OnClickButton()
-                .Subscribe(_=>OnClickEvent())
+                .Subscribe(_ => OnClickEvent())
                 .AddTo(_compositeDisposable);
         }
 

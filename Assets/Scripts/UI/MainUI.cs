@@ -1,5 +1,6 @@
 using UI.DebugMessage;
 using UI.ResetButton;
+using UI.Result;
 using UI.RotationSlider;
 using UI.ScaleSlider;
 using UI.ScoreText;

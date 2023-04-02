@@ -19,5 +19,14 @@ namespace UI.Result.RestartButton
         {
             return _button.OnClickAsObservable();
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isActive"></param>
+        public void SetActive(bool isActive)
+        {
+            _button.gameObject.SetActive(isActive);
+        }
     }
 }
