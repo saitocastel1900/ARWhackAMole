@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -58,6 +59,8 @@ namespace ARManager
 #if UNITY_EDITOR
             if (_input.InputTapPush())
             {
+                if (EventSystem.current.IsPointerOverGameObject()) return;
+                
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit raycastHit;
 
@@ -69,6 +72,8 @@ namespace ARManager
 #elif UNITY_ANDROID
             if (_input.InputTap())
             {
+                 if (EventSystem.current.IsPointerOverGameObject()) return;
+
                 _touchPosition = Input.GetTouch(0).position;
                 var hits = new List<ARRaycastHit>();
 
