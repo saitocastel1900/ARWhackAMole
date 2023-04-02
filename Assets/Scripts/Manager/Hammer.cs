@@ -2,6 +2,7 @@ using UI.DebugMessage;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Manager
@@ -16,6 +17,8 @@ namespace Manager
                 .Where(_ => _input.InputTapRelease())
                 .Subscribe(_ =>
                 {
+                    if (EventSystem.current.IsPointerOverGameObject()) return;
+
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit = new RaycastHit();
 
