@@ -11,9 +11,9 @@ namespace Enum
         public enum State
         {
             None      = 0,
-            WaitStart = 1,
+            Initialize = 1,
             Play      = 1 << 1,
-            Finish    = 1 << 2,
+            Result    = 1 << 2,
         }
     }
 }

@@ -1,7 +1,208 @@
 ﻿@startuml
-class ResultButtonPresenter
-{
 
+namespace Input{
+interface IInputEventProvider{
+}
+class MouseInputProvider{
+}
+class TouchInputProvider{
+}
+MouseInputProvider..|>IInputEventProvider
+TouchInputProvider..|>IInputEventProvider
 }
 
+namespace ARSystem{
+class ARManagerCore{
+}
+abstract class BaseARManager{
+}
+class LightEstimation{
+}
+class PlaneDetection{
+}
+BaseARManager-l>Input.IInputEventProvider
+PlacedObject.IPlacedObjectManager<--u-BaseARManager
+ARManagerCore<--BaseARManager
+LightEstimation--|>BaseARManager
+PlaneDetection--|>BaseARManager
+}
+
+namespace WhackAMole{
+class WhackAMoleScaleAndRotation{
+}
+namespace Mole{
+abstract class BaseMole{
+}
+class MoleCore{
+}
+class MoleMover{
+}
+class MoleEffect{
+}
+BaseMole-l->MoleCore
+BaseMole<|--MoleMover
+BaseMole<|--MoleEffect
+MoleEffect-->Effect.EffectManager
+BaseMole-u->Input.IInputEventProvider
+}
+
+namespace Hammer{
+class Hammer{
+}
+Hammer-->Input.IInputEventProvider
+}
+
+namespace Damage{
+interface IDamagable{
+}
+}
+WhackAMole.Mole.MoleCore .u.|>WhackAMole.Damage.IDamagable
+WhackAMole.Hammer.Hammer-->WhackAMole.Damage.IDamagable
+}
+
+namespace PlacedObject{
+interface IPlacedObjectManager{
+}
+class PlacedObjectManager{
+}
+class  PlacedObjectDataBase{
+}
+class PlacedObjectData{
+}
+PlacedObjectDataBase<--PlacedObjectManager
+PlacedObjectData<--PlacedObjectDataBase
+IPlacedObjectManager<|..PlacedObjectManager
+}
+
+namespace Effect{
+class DamageEffect{
+}
+class EffectPool{
+}
+class EffectManager{
+}
+abstract class ObjectPool{
+}
+EffectPool--|>ObjectPool
+EffectManager-->DamageEffect
+EffectManager-->EffectPool
+}
+
+namespace UI{
+namespace Main {
+class MainUI{
+}
+namespace DebugMessage {
+    class DebugMessagePresenter{
+    }
+    interface IDebugMessageModel{
+    }
+    class DebugMessageModel{       
+    }
+    class DebugMessageView{
+    }
+DebugMessageModel..|>IDebugMessageModel    
+DebugMessagePresenter-->IDebugMessageModel
+DebugMessagePresenter-->DebugMessageView
+}
+
+namespace RotationSlider {
+    class RotationSliderPresenter{
+    }
+    interface IRotationSliderModel{    
+    }
+    class RotationSliderModel{
+    }
+    class RotationSliderView{
+    }
+RotationSliderPresenter-->IRotationSliderModel
+RotationSliderPresenter-->RotationSliderView
+RotationSliderModel..|>IRotationSliderModel
+RotationSliderPresenter-u->WhackAMole.WhackAMoleScaleAndRotation
+}
+
+namespace ScaleSlider {
+    class ScaleSliderPresenter{
+    }
+     interface IScaleSliderModel{
+    }
+    class ScaleSliderModel{
+    }
+    class ScaleSliderView{
+    }
+ScaleSliderPresenter-->IScaleSliderModel
+ScaleSliderPresenter-->ScaleSliderView
+ScaleSliderModel..|>IScaleSliderModel
+ScaleSliderPresenter-u->WhackAMole.WhackAMoleScaleAndRotation
+}
+
+namespace ScoreText {
+    class ScoreTextPresenter{
+    }
+    interface IScoreTextModel{
+    }
+    class ScoreTextModel{
+    }
+    class ScoreTextView{
+    }
+ScoreTextPresenter-->IScoreTextModel
+ScoreTextPresenter-->ScoreTextView
+ScoreTextModel..|>IScoreTextModel
+}
+
+namespace ResetButton {
+    class ResetButtonPresenter{
+    }
+    interface IResetButtonModel{
+    }
+    class ResetButtonModel{
+    }
+    class ResetButtonView{
+    }
+ResetButtonPresenter-->IResetButtonModel
+ResetButtonPresenter-->ResetButtonView
+ResetButtonModel..|>IResetButtonModel
+}
+UI.Main.ResetButton.ResetButtonPresenter-u->UI.Main.MainUI
+UI.Main.ScoreText.ScoreTextPresenter-u->UI.Main.MainUI
+UI.Main.ScaleSlider.ScaleSliderPresenter-u->UI.Main.MainUI
+UI.Main.RotationSlider.RotationSliderPresenter-u->UI.Main.MainUI
+UI.Main.DebugMessage.DebugMessagePresenter-u->UI.Main.MainUI
+}
+
+namespace Result{
+class ResultUI{
+}
+namespace QuitButton {
+    class QuitButtonPresenter{
+    }
+    interface IQuitButtonModel{           
+    }
+    class QuitButtonModel{
+    }
+    class QuitButtonView{
+    }
+IQuitButtonModel<--QuitButtonPresenter
+QuitButtonView<--QuitButtonPresenter
+IQuitButtonModel<|..QuitButtonModel
+}
+namespace RestartButton {
+    class RestartButtonPresenter{
+    }
+    interface IRestartButtonModel{         
+    }
+    class RestartButtonModel{
+    }
+    class RestartButtonView{
+    }
+IRestartButtonModel<-- RestartButtonPresenter
+RestartButtonView<-- RestartButtonPresenter
+IRestartButtonModel<|.. RestartButtonModel
+}
+}
+UI.Result.RestartButton.RestartButtonPresenter-->UI.Result.ResultUI
+UI.Result.QuitButton.QuitButtonPresenter-->UI.Result.ResultUI
+UI.Result.ResultUI-->UI.Main.MainUI
+}
+WhackAMole.Mole.MoleCore-->UI.Main.MainUI
 @enduml
