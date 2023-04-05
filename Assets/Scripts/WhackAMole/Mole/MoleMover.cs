@@ -1,19 +1,26 @@
+using Const;
 using DG.Tweening;
 using UniRx;
+using UnityEngine;
 using Utility;
 
-namespace WhackAMole
+namespace WhackAMole.Mole
 {
     public class MoleMover : BaseMole
     {
         /// <summary>
-        /// 
+        /// モグラの位置が地表上にいるか
         /// </summary>
         private ReactiveProperty<bool> _isGrounded = new BoolReactiveProperty(true);
 
+        /// <summary>
+        /// モグラを動かすのTweenのキャッシュ
+        /// </summary>
+        private Tween _tween;
+
         protected override void OnInitialize()
         {
-            //
+            //ダメージを受けたら潜る
             _moleCore
                 .OnDamagedCallBack
                 .Subscribe(_ =>
@@ -22,7 +29,7 @@ namespace WhackAMole
                 })
                 .AddTo(this);
 
-            //
+            //モグラの位置によって、動きを決める
             _isGrounded
                 .DistinctUntilChanged()
                 .Subscribe(value =>
@@ -41,23 +48,32 @@ namespace WhackAMole
         }
 
         /// <summary>
-        /// 
+        /// 上昇
         /// </summary>
         private void Up()
         {
-            InGameAnimationUtility.MoleUpTween(transform)
+            _tween = InGameAnimationUtility.MoleUpTween(transform)
                 .SetEase(Ease.Linear)
-                .SetLink(this.gameObject).onComplete+=()=>_isGrounded.Value = true;
+                .SetLink(this.gameObject).OnComplete(()=>_isGrounded.Value = true);
         }
 
         /// <summary>
-        /// 
+        /// 下降
         /// </summary>
         private void Down()
         {
-            InGameAnimationUtility.MoleDownTween(transform)
+            _tween= InGameAnimationUtility.MoleDownTween(transform)
                 .SetEase(Ease.Linear)
-                .SetLink(this.gameObject).onComplete+=()=>_isGrounded.Value = false;
+                .SetLink(this.gameObject).OnComplete(()=>_isGrounded.Value = false);
+        }
+
+        /// <summary>
+        /// リセット
+        /// </summary>
+        public void Reset()
+        {
+            _tween.Kill(true);
+            transform.position = new Vector3(0,InGameConst.MoleInitialLocalPosition.y,0);
         }
     }
 }

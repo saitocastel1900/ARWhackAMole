@@ -1,10 +1,13 @@
 using TMPro;
 using UnityEngine;
 
-namespace UI.ScoreText
+namespace UI.Main.ScoreText
 {
     public class ScoreTextView : MonoBehaviour
     {
+        /// <summary>
+        /// Text
+        /// </summary>
         [SerializeField] private TextMeshProUGUI _text;
 
         /// <summary>

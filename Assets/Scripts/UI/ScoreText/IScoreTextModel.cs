@@ -1,19 +1,28 @@
 using System;
 using UniRx;
 
-public interface IScoreTextModel
+namespace UI.Main.ScoreText
 {
-    public event Action OnScoreOverCallBack;
-    
-    /// <summary>
-    /// 表示するスコア
-    /// </summary>
-    public IReactiveProperty<int> ScoreProp { get; }
+    public interface IScoreTextModel
+    {
+        /// <summary>
+        /// スコアが一定値をオーバーした時に呼ばれる
+        /// </summary>
+        public IObservable<Unit> OnScoreOverCallBack { get; }
 
-    /// <summary>
-    /// スコアを加算する
-    /// </summary>
-    public void AddScore();
+        /// <summary>
+        /// 表示するスコア
+        /// </summary>
+        public IReactiveProperty<int> ScoreProp { get; }
 
-    public void Reset();
+        /// <summary>
+        /// スコアを加算する
+        /// </summary>
+        public void AddScore();
+
+        /// <summary>
+        /// リセット
+        /// </summary>
+        public void Reset();
+    }
 }

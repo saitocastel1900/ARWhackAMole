@@ -5,14 +5,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Manager
+namespace WhackAMole.Hammer
 {
     public class Hammer : MonoBehaviour
     {
+        /// <summary>
+        /// Input
+        /// </summary>
         [Inject] private IInputEventProvider _input;
 
         private void Start()
         {
+            //入力があったら、もぐらをハンマーで叩く
             this.UpdateAsObservable()
                 .Where(_ => _input.InputTapRelease())
                 .Subscribe(_ =>

@@ -1,17 +1,11 @@
 using System;
-using UI.Result.ResetButton;
 using UniRx;
 using Zenject;
 
-namespace UI.ResetButton
+namespace UI.Main.ResetButton
 {
     public class ResetButtonPresenter : IDisposable , IInitializable
     {
-        /// <summary>
-        /// クリックしたときに呼ばれる
-        /// </summary>
-        public event Action OnClickCallBack;
-        
         /// <summary>
         /// View
         /// </summary>
@@ -70,24 +64,14 @@ namespace UI.ResetButton
         {
             //クリックした時に設置したオブジェクトを破壊する
             _view.OnClickButton()
-                .Subscribe(_=>OnClick())
+                .Subscribe(_=>_placedObjectManager.PlacedObjectDestroy())
                 .AddTo(_compositeDisposable);
 
             //オブジェクトを生成したと時に、ボタンを表示する
             _placedObjectManager
-                .OnCreatedObjectCallBack
-                .Subscribe(_=>_model.SetIsInteractable(true))
+                .CreatedObjectPrp
+                .Subscribe(_model.SetIsInteractable)
                 .AddTo(_compositeDisposable);
-        }
-        
-        /// <summary>
-        /// ボタンをクリックした時のイベント
-        /// </summary>.
-        private void OnClick()
-        {
-            _placedObjectManager.PlacedObjectDestroy();
-            _model.SetIsInteractable(false);
-            OnClickCallBack?.Invoke();
         }
 
         /// <summary>

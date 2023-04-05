@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.ResetButton
+namespace UI.Main.ResetButton
 {
     public class ResetButtonView : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace UI.ResetButton
         }
 
         /// <summary>
-        /// オブジェクト表示する
+        /// インタラクション可能にする
         /// </summary>
         /// <param name="isInteractable">表示するかの真偽値</param>
         public void SetInteractable(bool isInteractable)

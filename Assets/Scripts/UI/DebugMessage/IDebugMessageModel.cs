@@ -1,6 +1,6 @@
 using UniRx;
 
-namespace UI.DebugMessage
+namespace UI.Main.DebugMessage
 {
     public interface IDebugMessageModel
     {

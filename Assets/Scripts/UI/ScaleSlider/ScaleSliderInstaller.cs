@@ -1,5 +1,4 @@
-using UI.ScaleSlider;
-using UnityEngine;
+using UI.Main.ScaleSlider;
 using Zenject;
 
 public class ScaleSliderInstaller : MonoInstaller

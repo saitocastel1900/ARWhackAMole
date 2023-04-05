@@ -4,11 +4,8 @@ using UnityEngine;
 
 public interface IPlacedObjectManager
 {
-    /// <summary>
-    /// 設置するオブジェクトが設置されたときに呼ばれる
-    /// </summary>
-    public IObservable<Unit> OnCreatedObjectCallBack { get; }
-    
+    public IReactiveProperty<bool> CreatedObjectPrp { get; }
+
     /// <summary>
     /// オブジェクトを生成する
     /// </summary>

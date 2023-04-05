@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.DebugMessage
+namespace UI.Main.DebugMessage
 {
     public class DebugMessageView : MonoBehaviour
     {

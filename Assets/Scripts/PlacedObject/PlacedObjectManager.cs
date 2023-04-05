@@ -8,10 +8,11 @@ namespace PlacedObject
     public class PlacedObjectManager : MonoBehaviour , IPlacedObjectManager
     {
         /// <summary>
-        /// 設置するオブジェクトが設置されたときに呼ばれる
+        /// オブジェクトが生成されたかどうか
         /// </summary>
-        public IObservable<Unit> OnCreatedObjectCallBack => _createdObjectSubject;
-        private readonly Subject<Unit> _createdObjectSubject = new Subject<Unit>();
+        public IReactiveProperty<bool> CreatedObjectPrp => _createdObjectPrp;
+
+        private BoolReactiveProperty _createdObjectPrp = new BoolReactiveProperty(false);
 
         /// <summary>
         /// 設置するオブジェクトのリスト
@@ -35,7 +36,7 @@ namespace PlacedObject
             if (data != null)
             {
                 _placedObject = Instantiate(data.Item, position, rotation) as GameObject;
-                _createdObjectSubject.OnNext(Unit.Default);
+                _createdObjectPrp.Value = true;
             }
         }
 
@@ -45,6 +46,7 @@ namespace PlacedObject
         public void PlacedObjectDestroy()
         {
             Destroy(_placedObject);
+            _createdObjectPrp.Value = false;
         }
 
         /// <summary>

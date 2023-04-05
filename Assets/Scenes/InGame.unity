@@ -960,6 +960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 516560954}
   - component: {fileID: 516560955}
+  - component: {fileID: 516560956}
   m_Layer: 5
   m_Name: Result
   m_TagString: Untagged
@@ -1003,6 +1004,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backgroundPanel: {fileID: 333106753}
+--- !u!114 &516560956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516560953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 516560955}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 226819001}
+  _bindType: 0
 --- !u!1 &569795844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,28 +1666,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 691461258}
-  - component: {fileID: 691461257}
   - component: {fileID: 691461260}
   - component: {fileID: 691461261}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: InGameManager
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &691461257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 691461256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17ff282de03f153429aaa1d892e363d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &691461258
 Transform:
   m_ObjectHideFlags: 0
@@ -2983,7 +2989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1756048416
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3415,7 +3421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f8680280d9bf242bffe6031a19f31c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _result: {fileID: 516560955}
 --- !u!114 &1888794594
 MonoBehaviour:
   m_ObjectHideFlags: 0

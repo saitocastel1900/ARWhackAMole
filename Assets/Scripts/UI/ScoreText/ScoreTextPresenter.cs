@@ -2,15 +2,16 @@ using System;
 using UniRx;
 using Zenject;
 
-namespace UI.ScoreText
+namespace UI.Main.ScoreText
 {
     public class ScoreTextPresenter: IDisposable , IInitializable
     {
         /// <summary>
-        /// 
+        /// スコアが一定値をオーバーした時に呼ばれる
         /// </summary>
-        public event Action OnScoreOverCallBack;
-        
+        public IObservable<Unit> OnScoreOverCallBack=>_createdObjectSubject;
+        private readonly Subject<Unit> _createdObjectSubject = new Subject<Unit>();
+
         /// <summary>
         /// Model
         /// </summary>
@@ -57,9 +58,14 @@ namespace UI.ScoreText
                 .AddTo(_compositeDisposable);
         }
 
+        /// <summary>
+        /// イベントを設定
+        /// </summary>
         private void SetEvent()
         {
-            _model.OnScoreOverCallBack += ()=> OnScoreOverCallBack?.Invoke();
+            _model.OnScoreOverCallBack
+                .Subscribe(_=> _createdObjectSubject?.OnNext(Unit.Default))
+                .AddTo(_compositeDisposable);
         }
         
         /// <summary>
@@ -71,7 +77,7 @@ namespace UI.ScoreText
         }
 
         /// <summary>
-        /// 
+        /// リセット
         /// </summary>
         public void Reset()
         {

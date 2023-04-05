@@ -7,10 +7,11 @@ namespace UI.Result.RestartButton
     public class RestartButtonPresenter : IDisposable, IInitializable
     {
         /// <summary>
-        /// 
+        /// リスタートボタンが押されたときに呼ばれる
         /// </summary>
-        public event Action OnResetButtonClickCallBack;
-        
+        public IObservable<Unit> OnRestartButtonClickCallBack=>_restartClickSubject;
+        private readonly Subject<Unit> _restartClickSubject = new Subject<Unit>();
+
         /// <summary>
         /// Model
         /// </summary>
@@ -58,25 +59,17 @@ namespace UI.Result.RestartButton
         }
 
         /// <summary>
-        /// 
+        /// イベントを設定
         /// </summary>
         private void SetEvent()
         {
             _view.OnClickButton()
-                .Subscribe(_ => OnClickEvent())
+                .Subscribe(_ => _restartClickSubject?.OnNext(Unit.Default))
                 .AddTo(_compositeDisposable);
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private void OnClickEvent()
-        {
-            OnResetButtonClickCallBack?.Invoke();
-        }
-
-        /// <summary>
-        /// 
+        /// 表示を更新
         /// </summary>
         /// <param name="isShow"></param>
         public void SetIsShow(bool isShow)

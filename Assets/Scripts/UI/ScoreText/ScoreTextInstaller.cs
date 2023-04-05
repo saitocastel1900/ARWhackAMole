@@ -1,4 +1,4 @@
-using UI.ScoreText;
+using UI.Main.ScoreText;
 using Zenject;
 
 public class ScoreTextInstaller : MonoInstaller

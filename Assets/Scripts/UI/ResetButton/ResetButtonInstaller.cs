@@ -1,5 +1,4 @@
-using UI.ResetButton;
-using UI.Result.ResetButton;
+using UI.Main.ResetButton;
 using Zenject;
 
 public class ResetButtonInstaller : MonoInstaller

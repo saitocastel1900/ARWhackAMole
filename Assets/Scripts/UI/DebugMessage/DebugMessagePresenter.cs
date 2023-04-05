@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using Zenject;
 
-namespace UI.DebugMessage
+namespace UI.Main.DebugMessage
 {
     public class DebugMessagePresenter : IDisposable , IInitializable
     {

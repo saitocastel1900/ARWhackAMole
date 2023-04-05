@@ -8,7 +8,7 @@ namespace UI.Result.QuitButton
     public class QuitButtonView : MonoBehaviour
     {
         /// <summary>
-        /// 
+        /// Button
         /// </summary>
         [SerializeField] private Button _button;
 
@@ -21,7 +21,7 @@ namespace UI.Result.QuitButton
         }
 
         /// <summary>
-        /// 
+        /// 表示を更新
         /// </summary>
         /// <param name="isActive"></param>
         public void SetActive(bool isActive)
