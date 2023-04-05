@@ -70,7 +70,7 @@ namespace ARManager
                 }
             }
 #elif UNITY_ANDROID
-            if (_input.InputTap())
+            if (_input.InputTapPush())
             {
                  if (EventSystem.current.IsPointerOverGameObject()) return;
 

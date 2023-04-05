@@ -1,4 +1,4 @@
-using UI.RotationSlider;
+using UI.Main.RotationSlider;
 using Zenject;
 
 public class RotationSliderInstaller : MonoInstaller

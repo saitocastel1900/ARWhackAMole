@@ -40,18 +40,23 @@ namespace Const
         public const float PlacedObjectMaxRotation = 360f;
         
         /// <summary>
-        /// 
+        /// もぐらの初期位置
         /// </summary>
         public static readonly  Vector3 MoleInitialLocalPosition = new Vector3(0,0.005f,0);
         
         /// <summary>
-        /// 
+        /// モグラの潜る位置
         /// </summary>
         public static readonly  Vector3 MoleDivingLocalPosition = MoleInitialLocalPosition - new Vector3(0, 0.2f, 0);
         
         /// <summary>
-        /// 
+        /// ダメージエフェクトの発生位置
         /// </summary>
         public static readonly  Vector3 DamageEffectPosition = new Vector3(0, 0.04f, 0);
+
+        /// <summary>
+        /// スコアの上限
+        /// </summary>
+        public static int ScoreLimit=5;
     }
 }

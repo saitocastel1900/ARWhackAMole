@@ -1,6 +1,7 @@
 using System;
 using UI.Result.QuitButton;
 using UI.Result.RestartButton;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +12,9 @@ namespace UI.Result
         /// <summary>
         /// 
         /// </summary>
-        public event Action OnResetButtonClickCallBack;
+        public IObservable<Unit> OnRestartButtonClickCallBack=>_restartClickSubject;
+        private readonly Subject<Unit> _restartClickSubject = new Subject<Unit>();
+
 
         /// <summary>
         /// 
@@ -41,8 +44,13 @@ namespace UI.Result
         /// </summary>
         private void SetEvent()
         {
-            _restart.OnResetButtonClickCallBack += () => OnResetButtonClickCallBack?.Invoke();
-            _restart.OnResetButtonClickCallBack += () => SetView(false);
+            _restart.OnRestartButtonClickCallBack
+                .Subscribe(_ =>
+                {
+                    _restartClickSubject?.OnNext(Unit.Default);
+                    this.SetView(false);
+                })
+                .AddTo(this);
         }
 
         /// <summary>

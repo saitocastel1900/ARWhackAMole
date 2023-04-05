@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.ScaleSlider
+namespace UI.Main.ScaleSlider
 {
     public class ScaleSliderView : MonoBehaviour
     {
@@ -30,7 +30,7 @@ namespace UI.ScaleSlider
         }
         
         /// <summary>
-        /// 
+        /// スライダーが動かいた時に呼ばれるObservableを返す
         /// </summary>
         /// <returns></returns>
         public IObservable<float> OnSliderValueChanged()

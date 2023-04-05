@@ -1,6 +1,6 @@
 using UniRx;
 
-namespace UI.RotationSlider
+namespace UI.Main.RotationSlider
 {
     public class RotationSliderModel : IRotationSliderModel
     {
@@ -8,11 +8,10 @@ namespace UI.RotationSlider
         /// オブジェクトを生成したかのフラグ
         /// </summary>
         public IReactiveProperty<bool> IsInteractableProp => _isInteractableProp;
-
         private BoolReactiveProperty _isInteractableProp;
 
         /// <summary>
-        /// 
+        /// コンストラクタ
         /// </summary>
         public RotationSliderModel()
         {

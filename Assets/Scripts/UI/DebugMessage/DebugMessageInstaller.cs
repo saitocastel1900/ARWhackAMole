@@ -1,4 +1,4 @@
-using UI.DebugMessage;
+using UI.Main.DebugMessage;
 using Zenject;
 
 namespace Installer

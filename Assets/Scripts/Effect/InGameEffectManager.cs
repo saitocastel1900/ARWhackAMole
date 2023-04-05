@@ -1,7 +1,7 @@
 using Effect;
 using UnityEngine;
 
-namespace Manager
+namespace Effect
 {
     public class InGameEffectManager : MonoBehaviour
     {
@@ -32,6 +32,8 @@ namespace Manager
 
             //パーティクルの位置をランダムに決定
             effect.transform.position = position;
+            
+            effect.transform.SetParent(this.transform);
 
             //パーティクルの再生を実行、再生が終わったらプールに戻す
             effect.Play(_pool.Return);

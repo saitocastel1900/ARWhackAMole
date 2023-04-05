@@ -1,15 +1,13 @@
-using UI.Result.ResetButton;
 using UniRx;
 
-namespace UI.ResetButton
+namespace UI.Main.ResetButton
 {
     public class ResetButtonModel : IResetButtonModel
     {
         /// <summary>
-        /// オブジェクトを生成したかのフラグ
+        /// インタラクション可能かどうか
         /// </summary>
         public IReactiveProperty<bool> IsInteractableProp => _isInteractableProp;
-
         private BoolReactiveProperty _isInteractableProp;
 
         /// <summary>
@@ -21,7 +19,7 @@ namespace UI.ResetButton
         }
 
         /// <summary>
-        /// オブジェクトを生成したかのフラグの値を設定する
+        /// インタラクションを設定する
         /// </summary>
         /// <param name="IsInteractable">設定したい真偽値</param>
         public void SetIsInteractable(bool IsInteractable)

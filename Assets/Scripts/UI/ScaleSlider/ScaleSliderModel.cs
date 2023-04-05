@@ -1,6 +1,6 @@
 using UniRx;
 
-namespace UI.ScaleSlider
+namespace UI.Main.ScaleSlider
 {
     public class ScaleSliderModel : IScaleSliderModel
     {
@@ -8,11 +8,10 @@ namespace UI.ScaleSlider
         /// オブジェクトを生成したかのフラグ
         /// </summary>
         public IReactiveProperty<bool> IsInteractableProp => _isInteractableProp;
-
         private BoolReactiveProperty _isInteractableProp;
 
         /// <summary>
-        /// 
+        /// コンストラクタ
         /// </summary>
         public ScaleSliderModel()
         {

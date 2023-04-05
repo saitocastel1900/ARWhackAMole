@@ -54,25 +54,17 @@ namespace UI.Result.QuitButton
         }
 
         /// <summary>
-        /// 
+        /// イベントを設定
         /// </summary>
         private void SetEvent()
         {
             _view.OnClickButton()
-                .Subscribe(_ => OnClickEvent())
+                .Subscribe(_ => Application.Quit())
                 .AddTo(_compositeDisposable);
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        private void OnClickEvent()
-        {
-            Application.Quit();
-        }
-
-        /// <summary>
-        /// 
+        /// 表示を更新
         /// </summary>
         /// <param name="isShow"></param>
         public void SetIsShow(bool isShow)

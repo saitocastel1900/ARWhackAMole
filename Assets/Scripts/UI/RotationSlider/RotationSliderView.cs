@@ -4,7 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.RotationSlider
+namespace UI.Main.RotationSlider
 {
     public class RotationSliderView : MonoBehaviour
     {

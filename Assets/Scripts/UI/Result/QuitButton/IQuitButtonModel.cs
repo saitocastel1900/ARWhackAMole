@@ -5,12 +5,12 @@ namespace UI.Result.QuitButton
     public interface IQuitButtonModel
     {
         /// <summary>
-        /// オブジェクトを生成したかのフラグ
+        /// 表示をするかのフラグ
         /// </summary>
         public IReactiveProperty<bool> IsShowProp { get; }
 
         /// <summary>
-        /// オブジェクトを生成したかのフラグの値を設定する
+        /// 表示を更新
         /// </summary>
         /// <param name="IsShow">設定したい真偽値</param>
         public void SetIsShow(bool IsShow);

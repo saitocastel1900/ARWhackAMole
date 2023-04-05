@@ -12,8 +12,6 @@ namespace ARManager
         public IObservable<Unit> OnInitializeAsync => _onInitializeAsyncSubject;
         private readonly AsyncSubject<Unit> _onInitializeAsyncSubject = new AsyncSubject<Unit>();
 
-        
-        
         private void Awake()
         {
             _onInitializeAsyncSubject.OnNext(Unit.Default);

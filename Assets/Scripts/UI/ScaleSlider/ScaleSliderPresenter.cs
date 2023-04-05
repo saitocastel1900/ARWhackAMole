@@ -3,7 +3,7 @@ using WhackAMole;
 using UniRx;
 using Zenject;
 
-namespace UI.ScaleSlider
+namespace UI.Main.ScaleSlider
 {
     public class ScaleSliderPresenter : IDisposable , IInitializable
     {
@@ -71,10 +71,10 @@ namespace UI.ScaleSlider
             
             //オブジェクトが生成されたら、スライダーを表示する
             _placedObjectManager
-                .OnCreatedObjectCallBack
-                .Subscribe(_=>
+                .CreatedObjectPrp
+                .Subscribe(value=>
                 {
-                    _model.SetIsInteractable(true);
+                    _model.SetIsInteractable(value);
                     _view.AdjustmentSliderPosition();
                 })
                 .AddTo(_compositeDisposable);
@@ -89,15 +89,6 @@ namespace UI.ScaleSlider
             _placedObjectManager.GetPlacedObject()?.GetComponent<WhackAMoleScaleAndRotation>().ScaleChanged(value);
         }
 
-        /// <summary>
-        /// オブジェクトを生成したかのフラグの値を設定する
-        /// </summary>
-        /// <param name="IsCreated">設定したい真偽値</param>
-        public void SetIsCreated(bool IsCreated)
-        {
-            _model.SetIsInteractable(IsCreated);
-        }
-        
         /// <summary>
         /// Dispose
         /// </summary>

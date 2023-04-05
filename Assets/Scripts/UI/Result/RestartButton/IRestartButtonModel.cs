@@ -5,7 +5,7 @@ namespace UI.Result.RestartButton
     public interface IRestartButtonModel
     {
         /// <summary>
-        /// オブジェクトを生成したかのフラグ
+        /// 表示をするかのフラグ
         /// </summary>
         public IReactiveProperty<bool> IsShowProp { get; }
 
